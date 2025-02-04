@@ -11,6 +11,6 @@
   "scripts": {
     "test": "npm run test:fixpack && npm run test:renovate-config-validator",
     "test:fixpack": "fixpack --dryRun",
-    "test:renovate-config-validator": "git ls-files -- '*.json' ':!:package*.json' | xargs renovate-config-validator --strict"
+    "test:renovate-config-validator": "git ls-files -- '*.json' '*.json5' ':!:package*.json' | xargs renovate-config-validator --strict"
   }
 }
