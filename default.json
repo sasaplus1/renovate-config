@@ -1,16 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:best-practices",
-    ":enableRenovate",
-    ":dependencyDashboard",
-    ":label(renovate)",
-    ":timezone(Asia/Tokyo)",
-    ":separateMultipleMajorReleases",
-    ":automergeRequireAllStatusChecks",
-    "helpers:pinGitHubActionDigestsToSemver"
-  ],
-  "lockFileMaintenance": {
-    "enabled": true
-  }
+    "local>sasaplus1/renovate-config:main.json5"
+  ]
 }
