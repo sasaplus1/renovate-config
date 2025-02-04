@@ -1,0 +1,52 @@
+name: test
+
+on:
+  - push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TZ: Asia/Tokyo
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version-file: 'package.json'
+      - id: npm-cache
+        run: echo "dir=$(npm config get cache)" | tee -a "$GITHUB_OUTPUT"
+      - id: cache-key
+        run: >
+          echo 'suffix=${{ format('{0}-{1}-{2}', runner.os, runner.arch, hashFiles('package-lock.json')) }}'
+          | tee -a "$GITHUB_OUTPUT"
+      - id: restore-cache
+        uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: |
+            node_modules
+            ${{ steps.npm-cache.outputs.dir }}
+          key: npm-${{ steps.cache-key.outputs.suffix }}
+          restore-keys: |
+            npm-${{ steps.restore-key.outputs.suffix }}
+            npm-
+      - if: steps.restore-cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+        env:
+          NPM_CONFIG_AUDIT: false
+          NPM_CONFIG_PROGRESS: false
+          NPM_CONFIG_PREFER_OFFLINE: true
+      - run: npm rebuild && npm run prepare --if-present
+      - run: npm test
+      - if: github.ref_name == 'main'
+        uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: |
+            node_modules
+            ${{ steps.npm-cache.outputs.dir }}
+          key: npm-${{ steps.cache-key.outputs.suffix }}
