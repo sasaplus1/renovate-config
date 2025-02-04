@@ -1,1 +1,10 @@
-{}
+{
+  "devDependencies": {
+    "renovate": "39.158.1"
+  },
+  "engines": {
+    "node": "22",
+    "npm": "10"
+  },
+  "private": true
+}
