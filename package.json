@@ -7,5 +7,10 @@
     "node": "22",
     "npm": "10"
   },
-  "private": true
+  "private": true,
+  "scripts": {
+    "test": "npm run test:fixpack && npm run test:renovate-config-validator",
+    "test:fixpack": "fixpack --dryRun",
+    "test:renovate-config-validator": "ls -1 default.json | xargs -n 1 renovate-config-validator --strict"
+  }
 }
