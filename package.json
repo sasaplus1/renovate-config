@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "fixpack": "4.0.0",
     "renovate": "39.158.1"
   },
   "engines": {
