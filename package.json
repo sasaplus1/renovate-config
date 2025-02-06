@@ -8,8 +8,15 @@
     "node": "22",
     "npm": "11"
   },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
   "private": true,
   "scripts": {
+    "fix": "echo fix:fixpack fix:prettier | xargs -n 1 npm run",
+    "fix:fixpack": "fixpack",
+    "fix:prettier": "prettier --write .",
     "test": "echo test:fixpack test:prettier test:renovate-config-validator | xargs -n 1 npm run",
     "test:fixpack": "fixpack --dryRun",
     "test:prettier": "prettier --check .",
