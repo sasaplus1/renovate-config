@@ -1,6 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "local>sasaplus1/renovate-config:main.json5"
-  ]
+  "extends": ["local>sasaplus1/renovate-config:main.json5"]
 }
