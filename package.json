@@ -10,8 +10,9 @@
   },
   "private": true,
   "scripts": {
-    "test": "npm run test:fixpack && npm run test:renovate-config-validator",
+    "test": "echo test:fixpack test:prettier test:renovate-config-validator | xargs -n 1 npm run",
     "test:fixpack": "fixpack --dryRun",
+    "test:prettier": "prettier --check .",
     "test:renovate-config-validator": "git ls-files -- '*.json' '*.json5' ':!:package*.json' | xargs renovate-config-validator --strict"
   }
 }
