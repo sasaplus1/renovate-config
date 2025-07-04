@@ -1,13 +1,13 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  "packageRules": [
+  packageRules: [
     {
-      "matchFileNames": ["packages/**/package.json"],
-      "extends": [":pinOnlyDevDependencies"]
+      matchFileNames: ['packages/**/package.json'],
+      extends: [':pinOnlyDevDependencies']
     },
     {
-      "matchFileNames": ["apps/**/package.json"],
-      "extends": [":pinAllExceptPeerDependencies"]
+      matchFileNames: ['apps/**/package.json'],
+      extends: [':pinAllExceptPeerDependencies']
     }
   ]
 }
