@@ -4,9 +4,31 @@
     "prettier": "3.6.2",
     "renovate": "41.17.2"
   },
-  "engines": {
-    "node": "22",
-    "npm": "11"
+  "devEngines": {
+    "os": [
+      {
+        "name": "darwin"
+      },
+      {
+        "name": "linux"
+      }
+    ],
+    "cpu": [
+      {
+        "name": "x64"
+      },
+      {
+        "name": "arm64"
+      }
+    ],
+    "runtime": {
+      "name": "node",
+      "version": "22 || 24"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "11"
+    }
   },
   "prettier": {
     "singleQuote": true,
