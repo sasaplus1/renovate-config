@@ -35,7 +35,6 @@ jobs:
           key: npm-${{ steps.cache-key.outputs.suffix }}
           restore-keys: |
             npm-
-      - run: npm install --global "npm@$(npm pkg get engines.npm | tr -d '"')"
       - if: steps.restore-cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
         env:
