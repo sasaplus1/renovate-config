@@ -27,7 +27,7 @@
     },
     "packageManager": {
       "name": "npm",
-      "version": "10 || 11"
+      "version": "11"
     }
   },
   "prettier": {
