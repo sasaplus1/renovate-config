@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: lts/*
           # node-version-file: 'package.json'
+      - run: npm install -g npm@11
       - id: npm-cache
         run: echo "dir=$(npm config get cache)" | tee -a "$GITHUB_OUTPUT"
       - id: cache-key
