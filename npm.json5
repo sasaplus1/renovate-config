@@ -11,5 +11,13 @@
     'group:postcss',
     'group:react',
     'security:minimumReleaseAgeNpm'
-  ]
+  ],
+  constraints: {
+    npm: '11'
+  },
+  postUpgradeTasks: {
+    commands: ['npm install --package-lock-only'],
+    fileFilters: ['package-lock.json'],
+    executionMode: 'branch'
+  }
 }
