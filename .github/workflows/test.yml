@@ -23,6 +23,8 @@ jobs:
       - run: npm install -g npm@11
       - id: npm-cache
         run: echo "dir=$(npm config get cache)" | tee -a "$GITHUB_OUTPUT"
+      - id: npm-version
+        run: echo "major=$(npm --version | awk -F . '{ print $1 }' )" | tee -a "$GITHUB_OUTPUT"
       - id: cache-key
         run: >
           echo 'suffix=${{ format('{0}-{1}-{2}', runner.os, runner.arch, hashFiles('package-lock.json')) }}'
@@ -33,7 +35,7 @@ jobs:
           path: |
             node_modules
             ${{ steps.npm-cache.outputs.dir }}
-          key: npm-${{ steps.cache-key.outputs.suffix }}
+          key: npm-${{ steps.npm-version.outputs.major }}-${{ steps.cache-key.outputs.suffix }}
           restore-keys: |
             npm-
       - if: steps.restore-cache.outputs.cache-hit != 'true'
@@ -50,4 +52,4 @@ jobs:
           path: |
             node_modules
             ${{ steps.npm-cache.outputs.dir }}
-          key: npm-${{ steps.cache-key.outputs.suffix }}
+          key: npm-${{ steps.npm-version.outputs.major }}-${{ steps.cache-key.outputs.suffix }}
