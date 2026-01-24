@@ -2,7 +2,7 @@
   "devDependencies": {
     "fixpack": "4.0.0",
     "prettier": "3.8.1",
-    "renovate": "42.87.0"
+    "renovate": "42.88.2"
   },
   "devEngines": {
     "runtime": {
