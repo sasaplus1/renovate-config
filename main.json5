@@ -1,15 +1,38 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
+    // https://docs.renovatebot.com/presets-default/
     'config:best-practices',
     ':enableRenovate',
     ':dependencyDashboard',
+    // 設定が古くなったらマイグレーションのPull-requestを作成する
+    // https://docs.renovatebot.com/presets-default/#configmigration
+    ':configMigration',
+    // Pull-requestにラベルをつける
     ':label(renovate)',
+    // 脆弱性アラート由来のPull-requestにsecurityラベルをつける
+    // https://docs.renovatebot.com/presets-default/#enablevulnerabilityalertswithlabelarg0
+    ':enableVulnerabilityAlertsWithLabel(security)',
+    // タイムゾーンを日本時間にする
     ':timezone(Asia/Tokyo)',
+    // コミットスコープを無効にする
+    // https://docs.renovatebot.com/presets-default/#semanticcommitscopedisabled
+    ':semanticCommitScopeDisabled',
+    // メジャーバージョンの更新を個別に分ける
+    // https://docs.renovatebot.com/presets-default/#separatemultiplemajorreleases
     ':separateMultipleMajorReleases',
+    // マージ前に全てのステータスチェックが成功していることを確認する
+    // https://docs.renovatebot.com/presets-default/#automergerequireallstatuschecks
     ':automergeRequireAllStatusChecks',
+    // 外部アクションをdigestで固定しコメントにバージョンを記載する
+    // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
     'helpers:pinGitHubActionDigestsToSemver'
   ],
+  // silent modeを無効にする
+  // https://docs.renovatebot.com/configuration-options/#mode
+  mode: 'full',
+  // ロックファイルを更新する
+  // https://docs.renovatebot.com/configuration-options/#lockfilemaintenance
   lockFileMaintenance: {
     enabled: true
   },
