@@ -12,5 +12,28 @@
   ],
   lockFileMaintenance: {
     enabled: true
-  }
+  },
+  // リリースから7日経過するまで更新を保留する
+  // https://docs.renovatebot.com/key-concepts/minimum-release-age/
+  minimumReleaseAge: '7 days',
+  packageRules: [
+    {
+      // config:best-practicesがextendsするsecurity:minimumReleaseAgeNpmが
+      // npmを3日に上書きするため、後続のpackageRulesで7日に戻す
+      // https://docs.renovatebot.com/presets-security/#securityminimumreleaseagenpm
+      description: 'npmパッケージのクールダウンを7日にする',
+      matchDatasources: ['npm'],
+      matchUpdateTypes: ['major', 'minor', 'patch'],
+      minimumReleaseAge: '7 days'
+    },
+    {
+      // security:minimumReleaseAgeNpmがnpmに対して行っている除外を
+      // トップレベルのminimumReleaseAgeが波及する全datasourceへ広げる
+      // bumpはisBumpフラグでもマッチしクールダウンが外れるため含めない
+      // https://docs.renovatebot.com/key-concepts/minimum-release-age/#which-update-types-take-minimumreleaseage-into-account
+      description: 'release timestampを持たない更新はクールダウンの対象外にする',
+      matchUpdateTypes: ['pin', 'replacement', 'lockFileMaintenance'],
+      minimumReleaseAge: null
+    }
+  ]
 }

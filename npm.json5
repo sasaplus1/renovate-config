@@ -9,7 +9,6 @@
     'group:jsUnitTestNonMajor',
     'group:linters',
     'group:postcss',
-    'group:react',
-    'security:minimumReleaseAgeNpm'
+    'group:react'
   ]
 }
