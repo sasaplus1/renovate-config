@@ -10,7 +10,7 @@
       "version": "24"
     },
     "packageManager": {
-      "name": "npm",
+      "name": "pnpm",
       "version": "11"
     }
   },
@@ -20,10 +20,10 @@
   },
   "private": true,
   "scripts": {
-    "fix": "echo fix:fixpack fix:prettier | xargs -n 1 npm run",
+    "fix": "echo fix:fixpack fix:prettier | xargs -n 1 pnpm run",
     "fix:fixpack": "fixpack",
     "fix:prettier": "prettier --write .",
-    "test": "echo test:fixpack test:prettier test:renovate-config-validator | xargs -n 1 npm run",
+    "test": "echo test:fixpack test:prettier test:renovate-config-validator | xargs -n 1 pnpm run",
     "test:fixpack": "fixpack --dryRun",
     "test:prettier": "prettier --check .",
     "test:renovate-config-validator": "git ls-files -- '*.json' '*.json5' ':!:package*.json' | xargs renovate-config-validator --strict"
