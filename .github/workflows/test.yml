@@ -21,41 +21,34 @@ jobs:
           node-version: lts/*
           # node-version-file: 'package.json'
           package-manager-cache: false
-      - run: npm install -g "npm@$(jq -r '.devEngines.packageManager.version' package.json)"
-      - id: npm-cache
-        run: echo "dir=$(npm config get cache)" | tee -a "$GITHUB_OUTPUT"
-      - id: npm-version
-        run: echo "major=$(npm --version | awk -F . '{ print $1 }' )" | tee -a "$GITHUB_OUTPUT"
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      - id: pnpm-store
+        run: echo "dir=$(pnpm store path --silent)" | tee -a "$GITHUB_OUTPUT"
       - id: cache-key
         run: >
-          echo 'suffix=${{ format('{0}-{1}-{2}-{3}', runner.os, runner.arch, steps.npm-version.outputs.major, hashFiles('package-lock.json')) }}'
+          echo 'suffix=${{ format('{0}-{1}-{2}', runner.os, runner.arch, hashFiles('pnpm-lock.yaml')) }}'
           | tee -a "$GITHUB_OUTPUT"
       - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
-          path: ${{ steps.npm-cache.outputs.dir }}
-          key: npm-cache-${{ steps.cache-key.outputs.suffix }}
+          path: ${{ steps.pnpm-store.outputs.dir }}
+          key: pnpm-store-${{ steps.cache-key.outputs.suffix }}
           restore-keys: |
-            npm-cache-
+            pnpm-store-
       - id: restore-cache
         uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: node_modules
-          key: npm-modules-${{ steps.cache-key.outputs.suffix }}
+          key: pnpm-modules-${{ steps.cache-key.outputs.suffix }}
       - if: steps.restore-cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
-        env:
-          NPM_CONFIG_AUDIT: false
-          NPM_CONFIG_PROGRESS: false
-          NPM_CONFIG_PREFER_OFFLINE: true
-      - run: npm rebuild && npm run prepare --if-present
-      - run: npm test
+        run: pnpm install --frozen-lockfile
+      - run: pnpm test
       - if: github.ref_name == 'main'
         uses: actions/cache/save@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
-          path: ${{ steps.npm-cache.outputs.dir }}
-          key: npm-cache-${{ steps.cache-key.outputs.suffix }}
+          path: ${{ steps.pnpm-store.outputs.dir }}
+          key: pnpm-store-${{ steps.cache-key.outputs.suffix }}
       - if: github.ref_name == 'main'
         uses: actions/cache/save@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: node_modules
-          key: npm-modules-${{ steps.cache-key.outputs.suffix }}
+          key: pnpm-modules-${{ steps.cache-key.outputs.suffix }}

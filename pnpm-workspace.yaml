@@ -1,0 +1,23 @@
+# 依存を完全一致で保存する
+# https://pnpm.io/settings/dependency-resolution#saveexact
+saveExact: true
+
+# リリースから7日経過するまで依存を解決しない
+# main.json5のminimumReleaseAgeと揃える (単位は分)
+# https://pnpm.io/settings/dependency-resolution#minimumreleaseage
+minimumReleaseAge: 10080
+
+# CIではpnpm/action-setupがpnpmを用意するため
+# devEngines.packageManagerによる自動ダウンロードを無効にする
+# https://pnpm.io/settings/cli#pmonfail
+pmOnFail: ignore
+
+# renovateの推移的依存でビルドスクリプトを持つもの
+# 設定の検証には不要なため実行しない
+# https://pnpm.io/settings/build#allowbuilds
+allowBuilds:
+  better-sqlite3: false
+  core-js-pure: false
+  dtrace-provider: false
+  protobufjs: false
+  re2: false
